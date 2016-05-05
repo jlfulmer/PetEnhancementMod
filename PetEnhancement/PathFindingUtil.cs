@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 
 using StardewValley;
+using StardewValley.Buildings;
 using StardewValley.Characters;
+using StardewValley.Locations;
 using StardewValley.TerrainFeatures;
 
 using xTile.Dimensions;
@@ -138,17 +140,7 @@ namespace PetEnhancement
             {
                 for (int h = 0; h < yTiles; h++)
                 {
-                    var tile = new Vector2(i, h);
-
-                    Location displayLoc = new Location(i * Game1.tileSize, h * Game1.tileSize);
-
-                    StardewValley.Object obj = null;
-                    location.objects.TryGetValue(tile, out obj);
-
-                    TerrainFeature terrainObj = null;
-                    location.terrainFeatures.TryGetValue(tile, out terrainObj);
-
-                    if (!location.isPointPassable(displayLoc, Game1.viewport) || (obj != null && !obj.isPassable()) || (terrainObj != null && !terrainObj.isPassable())) {
+                    if (!isPassableTile(location, i, h)) {
                         weight[i, h] = 1;
                     }
                 }
@@ -170,6 +162,30 @@ namespace PetEnhancement
                 Console.WriteLine("DEBUG --> Failed to check tile at X position " + columnToCheck + ": " + e.Message);
             }
             return ret;
+        }
+
+        private static bool isPassableTile(GameLocation location, int x, int y)
+        {
+            var tile = new Vector2(x, y);
+
+            Location displayLoc = new Location(x * Game1.tileSize, y * Game1.tileSize);
+
+            StardewValley.Object obj = null;
+            location.objects.TryGetValue(tile, out obj);
+
+            TerrainFeature terrainObj = null;
+            location.terrainFeatures.TryGetValue(tile, out terrainObj);
+
+            Building building = null;
+            if (location is BuildableGameLocation)
+            {
+                building = ((BuildableGameLocation)location).getBuildingAt(tile);
+            }
+
+            return location.isPointPassable(displayLoc, Game1.viewport)
+                   && building == null
+                   && (obj == null || obj.isPassable())
+                   && (terrainObj == null || terrainObj.isPassable());
         }
     }
 }

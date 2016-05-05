@@ -31,6 +31,7 @@ namespace PetEnhancement
 
         public override void Entry(params object[] objects)
         {
+            registerCommands();
             StardewModdingAPI.Events.GameEvents.UpdateTick += EventUpdateTick;
         }
 
@@ -69,6 +70,18 @@ namespace PetEnhancement
             }
 
             previousMouseState = mouseState;
+        }
+
+        public static void registerCommands()
+        {
+            Command.RegisterCommand("print_pet_info", "").CommandFired += print_pet_info_CommandFired;
+        }
+
+        private static void print_pet_info_CommandFired(object sender, EventArgsCommand e)
+        {
+            Pet pet = (Pet)Game1.getCharacterFromName(Game1.player.getPetName());
+
+            Console.WriteLine("Bounding Box: " + pet.GetBoundingBox());
         }
     }
 }

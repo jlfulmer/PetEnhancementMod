@@ -33,10 +33,7 @@ namespace PetEnhancement
 
         public void intialize()
         {
-            if (pet is Cat)
-            {
-                provider = new PetActionProvider((Cat)pet);
-            }
+            provider = new PetActionProvider(pet);
             currentPath = null;
         }
 
@@ -81,7 +78,7 @@ namespace PetEnhancement
                 generatePath();
             }
 
-            if (currentPath.Count > 0)
+            if (currentPath != null && currentPath.Count > 0)
             {
                 var target = PathFindingUtil.getTargetPosition(currentPath.First());
                 var currentPos = pet.position;
@@ -120,12 +117,20 @@ namespace PetEnhancement
 
         private void generatePath()
         {
-            currentPath = PathFindingUtil.findPathToFarmer(pet, farmer);
+            try
+            {
+                currentPath = PathFindingUtil.findPathToFarmer(pet, farmer);
 
-            // save farmer position, don't include in final pathing
-            savedFarmerPosition = currentPath.Last();
-            currentPath.Remove(savedFarmerPosition);
-            currentPath.Remove(currentPath.Last());
+                // save farmer position, don't include in final pathing
+                savedFarmerPosition = currentPath.Last();
+                currentPath.Remove(savedFarmerPosition);
+                currentPath.Remove(currentPath.Last());
+            }
+            catch (Exception e)
+            {
+                currentPath = null;
+                provider.setCurrentAction(Action.SITTING);
+            }
         }
     }
 }
