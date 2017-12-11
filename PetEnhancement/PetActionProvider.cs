@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetEnhancement
+namespace PetEnhancements
 {
     class PetActionProvider
     {
