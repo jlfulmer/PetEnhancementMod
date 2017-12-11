@@ -1,0 +1,6 @@
+C:\Users\Linus\Documents\Visual Studio 2017\StardewValleyMods\PetEnhancements\PetEnhancments\PetEnhancments\bin\Debug\PetEnhancments.dll
+C:\Users\Linus\Documents\Visual Studio 2017\StardewValleyMods\PetEnhancements\PetEnhancments\PetEnhancments\bin\Debug\PetEnhancments.pdb
+C:\Users\Linus\Documents\Visual Studio 2017\StardewValleyMods\PetEnhancements\PetEnhancments\PetEnhancments\obj\Debug\PetEnhancments.csprojResolveAssemblyReference.cache
+C:\Users\Linus\Documents\Visual Studio 2017\StardewValleyMods\PetEnhancements\PetEnhancments\PetEnhancments\obj\Debug\PetEnhancments.csproj.CoreCompileInputs.cache
+C:\Users\Linus\Documents\Visual Studio 2017\StardewValleyMods\PetEnhancements\PetEnhancments\PetEnhancments\obj\Debug\PetEnhancments.dll
+C:\Users\Linus\Documents\Visual Studio 2017\StardewValleyMods\PetEnhancements\PetEnhancments\PetEnhancments\obj\Debug\PetEnhancments.pdb
