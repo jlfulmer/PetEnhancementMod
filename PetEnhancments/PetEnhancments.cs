@@ -37,7 +37,7 @@ namespace PetEnhancements
 
             GameEvents.UpdateTick += GameEvents_UpdateTick;
             //Helper.ConsoleCommands.Add("print_pet_info", "Shows information about your current pet", print_pet_info_CommandFired());
-            //StardewModdingAPI.Events.GameEvents.UpdateTick += EventUpdateTick;
+            
 
         }
 
@@ -91,60 +91,7 @@ namespace PetEnhancements
         }
     }
 
-       /* private void EventUpdateTick()
-        {
-            if (Game1.currentLocation == null) return;
+    
 
-            SFarmer farmer = Game1.player;
-            Pet pet;
-
-            if(Context.IsPlayerFree && Context.IsWorldReady)
-            {
-                pet = (Pet)Game1.getCharacterFromName(farmer.getPetName());
-            } else
-            {
-                pet = null;
-            }
-
-          
-
-            if (actionHandler == null && pet != null)
-            {
-                actionHandler = new PetActionHandler(pet);
-                actionHandler.intialize();
-            }
-
-            MouseState mouseState = Mouse.GetState();
-            if (mouseState.RightButton == ButtonState.Released && previousMouseState.RightButton == ButtonState.Pressed)
-            {
-                var cursorTile = Game1.currentCursorTile;
-                bool intersects = Utility.doesRectangleIntersectTile(pet.GetBoundingBox(), (int)cursorTile.X, (int)cursorTile.Y);
-                if (intersects && pet.friendshipTowardFarmer >= FRIENDSHIP_POINTS)
-                {
-                    active = !active;
-                    if (active)
-                    {
-                        pet.jump();
-                    }
-                }
-            }
-
-            if (active)
-            {
-                actionHandler.performAction();
-                
-                
-            }
-
-            previousMouseState = mouseState;
-        }
-
-
-
-        /*private static void print_pet_info_CommandFired()
-        {
-            Pet pet = (Pet)Game1.getCharacterFromName(Game1.player.getPetName());
-
-            Console.WriteLine("Bounding Box: " + pet.GetBoundingBox());
-        }*/
+       
     }
