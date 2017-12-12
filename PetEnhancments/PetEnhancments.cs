@@ -37,7 +37,7 @@ namespace PetEnhancements
 
             GameEvents.UpdateTick += GameEvents_UpdateTick;
             //Helper.ConsoleCommands.Add("print_pet_info", "Shows information about your current pet", print_pet_info_CommandFired());
-            
+
 
         }
 
@@ -48,13 +48,13 @@ namespace PetEnhancements
             SFarmer farmer = Game1.player;
             Pet pet;
 
-            if (Context.IsPlayerFree && Context.IsWorldReady)
+            if (Context.IsWorldReady)
             {
-                pet = (Pet)Game1.getCharacterFromName(farmer.getPetName());
-            }
-            else
+
+                pet = (Pet)(Game1.getCharacterFromName(farmer.getPetName()));
+            } else
             {
-                pet = null;
+                return;
             }
 
 
@@ -69,7 +69,9 @@ namespace PetEnhancements
             if (mouseState.RightButton == ButtonState.Released && previousMouseState.RightButton == ButtonState.Pressed)
             {
                 var cursorTile = Game1.currentCursorTile;
+
                 bool intersects = Utility.doesRectangleIntersectTile(pet.GetBoundingBox(), (int)cursorTile.X, (int)cursorTile.Y);
+
                 if (intersects && pet.friendshipTowardFarmer >= FRIENDSHIP_POINTS)
                 {
                     active = !active;
@@ -91,7 +93,7 @@ namespace PetEnhancements
         }
     }
 
-    
 
-       
-    }
+
+
+}
