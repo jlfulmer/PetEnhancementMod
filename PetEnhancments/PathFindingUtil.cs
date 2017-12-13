@@ -15,7 +15,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace PetEnhancement
+using SFarmer = StardewValley.Farmer;
+
+namespace PetEnhancements
 {
     class PathFindingUtil
     {
@@ -26,10 +28,10 @@ namespace PetEnhancement
             return new Vector2(tile.X * Game1.tileSize, tile.Y * Game1.tileSize);
         }
 
-        public static List<Vector2> findPathToFarmer(Pet pet, Farmer player)
+        public static List<Vector2> FindPathToFarmer(Pet pet, SFarmer player)
         {
             updateWeights();
-            var start = new Vector2((int) Math.Round(pet.position.X / Game1.tileSize), (int) Math.Round(pet.position.Y / Game1.tileSize));
+            var start = new Vector2((int)Math.Round(pet.position.X / Game1.tileSize), (int)Math.Round(pet.position.Y / Game1.tileSize));
             var end = player.getTileLocation();
 
 
@@ -54,7 +56,8 @@ namespace PetEnhancement
                 openSet.Remove(current);
                 closedSet.Add(current);
 
-                foreach (var neighbor in getOpenAdjacentTiles(player.currentLocation, current)) {
+                foreach (var neighbor in getOpenAdjacentTiles(player.currentLocation, current))
+                {
                     var tempCurrentDistance = currentDistance[current] + 1;
 
                     if (closedSet.Contains(neighbor) && tempCurrentDistance >= currentDistance[neighbor])
@@ -140,7 +143,8 @@ namespace PetEnhancement
             {
                 for (int h = 0; h < yTiles; h++)
                 {
-                    if (!isPassableTile(location, i, h)) {
+                    if (!isPassableTile(location, i, h))
+                    {
                         weight[i, h] = 1;
                     }
                 }
@@ -155,9 +159,10 @@ namespace PetEnhancement
             {
                 if (columnToCheck < weight.GetLength(0))
                 {
-                    ret = weight[(int) columnToCheck, (int)tile.Y] == 0;
+                    ret = weight[(int)columnToCheck, (int)tile.Y] == 0;
                 }
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine("DEBUG --> Failed to check tile at X position " + columnToCheck + ": " + e.Message);
             }

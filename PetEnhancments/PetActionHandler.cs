@@ -14,12 +14,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace PetEnhancement
+using SFarmer = StardewValley.Farmer;
+
+namespace PetEnhancements
 {
     class PetActionHandler
     {
         private Pet pet;
-        private Farmer farmer;
+        private SFarmer farmer;
         private PetActionProvider provider;
         private List<Vector2> currentPath;
         private Vector2 savedFarmerPosition;
@@ -119,15 +121,16 @@ namespace PetEnhancement
         {
             try
             {
-                currentPath = PathFindingUtil.findPathToFarmer(pet, farmer);
+                currentPath = PathFindingUtil.FindPathToFarmer(pet, farmer);
 
                 // save farmer position, don't include in final pathing
                 savedFarmerPosition = currentPath.Last();
                 currentPath.Remove(savedFarmerPosition);
                 currentPath.Remove(currentPath.Last());
             }
-            catch (Exception e)
+            catch (Exception)
             {
+                
                 currentPath = null;
                 provider.setCurrentAction(Action.SITTING);
             }
