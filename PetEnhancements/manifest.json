@@ -4,6 +4,6 @@
   "Version": "0.0.1",
   "Description": "This mod makes your pet follow you when you right-click it...",
   "UniqueID": "JfulmerPetEnhancementMod",
-  "EntryDll": "PetEnhancments.dll",
+  "EntryDll": "PetEnhancements.dll",
   "UpdateKeys": []
 }

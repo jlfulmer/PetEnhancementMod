@@ -7,8 +7,8 @@
     <ProjectGuid>{585ED57E-BF7A-4943-8205-F118D5156769}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PetEnhancments</RootNamespace>
-    <AssemblyName>PetEnhancments</AssemblyName>
+    <RootNamespace>PetEnhancements</RootNamespace>
+    <AssemblyName>PetEnhancements</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -48,7 +48,7 @@
     <Compile Include="Action.cs" />
     <Compile Include="PetActionHandler.cs" />
     <Compile Include="PetActionProvider.cs" />
-    <Compile Include="PetEnhancments.cs" />
+    <Compile Include="PetEnhancements.cs" />
     <Compile Include="PathFindingUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
