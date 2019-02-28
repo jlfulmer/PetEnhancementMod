@@ -1,25 +1,18 @@
-﻿using Microsoft.Xna.Framework;
-
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Buildings;
 using StardewValley.Characters;
 using StardewValley.Locations;
 using StardewValley.TerrainFeatures;
-
 using xTile.Dimensions;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-
-using SFarmer = StardewValley.Farmer;
+using SObject = StardewValley.Object;
 
 namespace PetEnhancements
 {
-    class PathFindingUtil
+    internal class PathFindingUtil
     {
         private static byte[,] weight;
 
@@ -28,7 +21,7 @@ namespace PetEnhancements
             return new Vector2(tile.X * Game1.tileSize, tile.Y * Game1.tileSize);
         }
 
-        public static List<Vector2> FindPathToFarmer(Pet pet, SFarmer player)
+        public static List<Vector2> FindPathToFarmer(Pet pet, Farmer player)
         {
             updateWeights();
             var start = new Vector2((int)Math.Round(pet.position.X / Game1.tileSize), (int)Math.Round(pet.position.Y / Game1.tileSize));
@@ -175,16 +168,13 @@ namespace PetEnhancements
 
             Location displayLoc = new Location(x * Game1.tileSize, y * Game1.tileSize);
 
-            StardewValley.Object obj = null;
-            location.objects.TryGetValue(tile, out obj);
-
-            TerrainFeature terrainObj = null;
-            location.terrainFeatures.TryGetValue(tile, out terrainObj);
+            location.objects.TryGetValue(tile, out SObject obj);
+            location.terrainFeatures.TryGetValue(tile, out TerrainFeature terrainObj);
 
             Building building = null;
-            if (location is BuildableGameLocation)
+            if (location is BuildableGameLocation buildableLocation)
             {
-                building = ((BuildableGameLocation)location).getBuildingAt(tile);
+                building = buildableLocation.getBuildingAt(tile);
             }
 
             return location.isPointPassable(displayLoc, Game1.viewport)

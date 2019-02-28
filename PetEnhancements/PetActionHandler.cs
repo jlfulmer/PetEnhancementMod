@@ -1,27 +1,16 @@
-﻿using Microsoft.Xna.Framework;
-
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Characters;
 
-using xTile.Tiles;
-using xTile.Dimensions;
-using xTile.Display;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-
-using SFarmer = StardewValley.Farmer;
-
 namespace PetEnhancements
 {
-    class PetActionHandler
+    internal class PetActionHandler
     {
-        private Pet pet;
-        private SFarmer farmer;
+        private readonly Pet pet;
+        private readonly Farmer farmer;
         private PetActionProvider provider;
         private List<Vector2> currentPath;
         private Vector2 savedFarmerPosition;
@@ -130,7 +119,7 @@ namespace PetEnhancements
             }
             catch (Exception)
             {
-                
+
                 currentPath = null;
                 provider.setCurrentAction(Action.SITTING);
             }

@@ -1,26 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using System;
 using Microsoft.Xna.Framework.Input;
-
 using StardewModdingAPI;
-using StardewModdingAPI.Events;
 using StardewValley;
 using StardewValley.Characters;
-using StardewValley.Objects;
-using StardewValley.TerrainFeatures;
-
-using xTile.Tiles;
-using xTile.Dimensions;
-using xTile.Layers;
-
-using SFarmer = StardewValley.Farmer;
-
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-
 
 namespace PetEnhancements
 {
@@ -28,36 +10,31 @@ namespace PetEnhancements
     {
         private const int FRIENDSHIP_POINTS = 0;
 
-        private bool active = false;
-        private PetActionHandler actionHandler = null;
+        private bool active;
+        private PetActionHandler actionHandler;
         private MouseState previousMouseState;
 
         public override void Entry(IModHelper helper)
         {
-
             GameEvents.UpdateTick += GameEvents_UpdateTick;
             //Helper.ConsoleCommands.Add("print_pet_info", "Shows information about your current pet", print_pet_info_CommandFired());
-
-
         }
 
         private void GameEvents_UpdateTick(object sender, EventArgs e)
         {
             if (Game1.currentLocation == null) return;
 
-            SFarmer farmer = Game1.player;
+            Farmer farmer = Game1.player;
             Pet pet;
 
             if (Context.IsWorldReady)
             {
-
                 pet = (Pet)(Game1.getCharacterFromName(farmer.getPetName()));
-            } else
+            }
+            else
             {
                 return;
             }
-
-
 
             if (actionHandler == null && pet != null)
             {
@@ -85,15 +62,9 @@ namespace PetEnhancements
             if (active)
             {
                 actionHandler.performAction();
-
-
             }
 
             previousMouseState = mouseState;
         }
     }
-
-
-
-
 }
