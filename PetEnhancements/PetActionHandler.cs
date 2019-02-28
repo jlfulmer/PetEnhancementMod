@@ -77,7 +77,7 @@ namespace PetEnhancements
                 if (Vector2.Distance(currentPos, target) < 4)
                 {
                     currentPath.Remove(currentPath.First());
-                    pet.position = target;
+                    pet.Position = target;
                 }
                 else
                 {
@@ -88,11 +88,11 @@ namespace PetEnhancements
 
                     if (Math.Abs(velocity.X) > Math.Abs(velocity.Y))
                     {
-                        pet.facingDirection = velocity.X >= 0 ? 1 : 3;
+                        pet.FacingDirection = velocity.X >= 0 ? 1 : 3;
                     }
                     else
                     {
-                        pet.facingDirection = velocity.Y >= 0 ? 2 : 0;
+                        pet.FacingDirection = velocity.Y >= 0 ? 2 : 0;
                     }
 
                     pet.setMovingInFacingDirection();
