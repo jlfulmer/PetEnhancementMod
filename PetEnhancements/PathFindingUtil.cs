@@ -81,13 +81,7 @@ namespace PetEnhancements
             }
 
             // unable to figure out a path, abort.
-            throw new Exception(
-                string.Format(
-                    "unable to find a path.",
-                    start.X, start.Y,
-                    end.X, end.Y
-                )
-            );
+            throw new Exception($"unable to find a path from ({start.X}, {start.Y}) to ({end.X}, {end.Y}).");
         }
 
         private static double performHeuristic(Vector2 start, Vector2 end)
