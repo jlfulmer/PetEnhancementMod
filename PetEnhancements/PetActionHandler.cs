@@ -1,27 +1,16 @@
-﻿using Microsoft.Xna.Framework;
-
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Characters;
 
-using xTile.Tiles;
-using xTile.Dimensions;
-using xTile.Display;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-
-using SFarmer = StardewValley.Farmer;
-
 namespace PetEnhancements
 {
-    class PetActionHandler
+    internal class PetActionHandler
     {
-        private Pet pet;
-        private SFarmer farmer;
+        private readonly Pet pet;
+        private readonly Farmer farmer;
         private PetActionProvider provider;
         private List<Vector2> currentPath;
         private Vector2 savedFarmerPosition;
@@ -88,7 +77,7 @@ namespace PetEnhancements
                 if (Vector2.Distance(currentPos, target) < 4)
                 {
                     currentPath.Remove(currentPath.First());
-                    pet.position = target;
+                    pet.Position = target;
                 }
                 else
                 {
@@ -99,11 +88,11 @@ namespace PetEnhancements
 
                     if (Math.Abs(velocity.X) > Math.Abs(velocity.Y))
                     {
-                        pet.facingDirection = velocity.X >= 0 ? 1 : 3;
+                        pet.FacingDirection = velocity.X >= 0 ? 1 : 3;
                     }
                     else
                     {
-                        pet.facingDirection = velocity.Y >= 0 ? 2 : 0;
+                        pet.FacingDirection = velocity.Y >= 0 ? 2 : 0;
                     }
 
                     pet.setMovingInFacingDirection();
@@ -130,7 +119,7 @@ namespace PetEnhancements
             }
             catch (Exception)
             {
-                
+
                 currentPath = null;
                 provider.setCurrentAction(Action.SITTING);
             }

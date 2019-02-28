@@ -1,24 +1,19 @@
-﻿using StardewValley;
+﻿using System;
+using StardewValley;
 using StardewValley.Characters;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PetEnhancements
 {
-    class PetActionProvider
+    internal class PetActionProvider
     {
         private const int ACTION_DELAY_MAX = 5;
 
         private Action currentAction = Action.SITTING;
-        private Random random;
-        private Pet pet = null;
+        private readonly Random random;
+        private readonly Pet pet;
 
-        private float currDelay = 0;
-        private bool startedFollowing = false;
+        private float currDelay;
+        private bool startedFollowing;
 
         public PetActionProvider(Pet pet)
         {
