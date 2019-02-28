@@ -1,70 +1,80 @@
-﻿using System;
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
 using StardewModdingAPI;
+using StardewModdingAPI.Events;
 using StardewValley;
 using StardewValley.Characters;
 
 namespace PetEnhancements
 {
+    /// <summary>The mod entry class loaded by SMAPI.</summary>
     public class PetEnhancement : Mod
     {
         private const int FRIENDSHIP_POINTS = 0;
 
         private bool active;
         private PetActionHandler actionHandler;
-        private MouseState previousMouseState;
+        private Pet pet;
 
+        /// <summary>The mod entry point, called after the mod is first loaded.</summary>
+        /// <param name="helper">Provides simplified APIs for writing mods.</param>
         public override void Entry(IModHelper helper)
         {
-            GameEvents.UpdateTick += GameEvents_UpdateTick;
-            //Helper.ConsoleCommands.Add("print_pet_info", "Shows information about your current pet", print_pet_info_CommandFired());
+            helper.Events.GameLoop.DayStarted += onDayStarted;
+            helper.Events.GameLoop.UpdateTicked += onUpdateTicked;
+            helper.Events.Input.ButtonPressed += onButtonPressed;
         }
 
-        private void GameEvents_UpdateTick(object sender, EventArgs e)
+        /// <summary>Raised after the game begins a new day (including when the player loads a save).</summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event data.</param>
+        private void onDayStarted(object sender, DayStartedEventArgs e)
         {
-            if (Game1.currentLocation == null) return;
+            // reset pet
+            this.pet = null;
+        }
 
-            Farmer farmer = Game1.player;
-            Pet pet;
-
-            if (Context.IsWorldReady)
-            {
-                pet = (Pet)(Game1.getCharacterFromName(farmer.getPetName()));
-            }
-            else
-            {
+        /// <summary>Raised after the game state is updated (≈60 times per second).</summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event data.</param>
+        private void onUpdateTicked(object sender, UpdateTickedEventArgs e)
+        {
+            if (!Context.IsWorldReady || Game1.currentLocation == null)
                 return;
+
+            // find pet
+            if (pet == null)
+            {
+                this.pet = (Pet)Game1.getCharacterFromName(Game1.player.getPetName());
+                if (pet != null)
+                {
+                    this.actionHandler = new PetActionHandler(pet);
+                    this.actionHandler.intialize();
+                }
+                else
+                    this.actionHandler = null;
             }
 
-            if (actionHandler == null && pet != null)
-            {
-                actionHandler = new PetActionHandler(pet);
-                actionHandler.intialize();
-            }
+            // apply action
+            if (this.active)
+                actionHandler?.performAction();
+        }
 
-            MouseState mouseState = Mouse.GetState();
-            if (mouseState.RightButton == ButtonState.Released && previousMouseState.RightButton == ButtonState.Pressed)
+        /// <summary>Raised after the player presses a button on the keyboard, controller, or mouse.</summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event data.</param>
+        private void onButtonPressed(object sender, ButtonPressedEventArgs e)
+        {
+            if (e.Button == SButton.MouseRight && this.pet != null)
             {
-                var cursorTile = Game1.currentCursorTile;
-
+                Vector2 cursorTile = Game1.currentCursorTile;
                 bool intersects = Utility.doesRectangleIntersectTile(pet.GetBoundingBox(), (int)cursorTile.X, (int)cursorTile.Y);
-
                 if (intersects && pet.friendshipTowardFarmer >= FRIENDSHIP_POINTS)
                 {
                     active = !active;
                     if (active)
-                    {
                         pet.jump();
-                    }
                 }
             }
-
-            if (active)
-            {
-                actionHandler.performAction();
-            }
-
-            previousMouseState = mouseState;
         }
     }
 }
